@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item active">
+                    <a class="nav-link text-center font-weight-bold" href="?calculator=crypto">Crypto Converter</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-center font-weight-bold" href="?calculator=regular">Regular Converter</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    {% if navbar_choice == "crypto" %}
+    <div class="container mt-5">
+        <h2>Crypto Converter</h2>
+        <form action="/" method="post">
+            <div class="form-group">
+                <label for="from_currency_crypto">From Currency</label>
+                <select class="form-control" id="from_currency_crypto" name="from_currency_crypto">
+                    {% for crypto in supported_cryptos %}
+                    <option value="{{ crypto }}">{{ crypto }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to_currency_crypto">To Currency</label>
+                <select class="form-control" id="to_currency_crypto" name="to_currency_crypto">
+                    {% for fiat in supported_fiats %}
+                    <option value="{{ fiat }}">{{ fiat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount_crypto">Amount</label>
+                <input type="number" class="form-control" id="amount_crypto" name="amount_crypto" step="0.01" min="0.01"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+        {% if exchange_rate is not none and converted_amount is not none %}
+        <div class="mt-3">
+            <h4>Conversion Result:</h4>
+            {% if exchange_rate is not none %}
+            <p>Exchange Rate: {{ exchange_rate }}</p>
+            {% endif %}
+            {% if converted_amount is not none %}
+            <p>Converted Amount: {{ converted_amount }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if navbar_choice == "regular" %}
+    <div class="container mt-5">
+        <h2>Regular Converter</h2>
+        <form action="/" method="post">
+            <div class="form-group">
+                <label for="from_currency_regular">From Currency</label>
+                <select class="form-control" id="from_currency_regular" name="from_currency_regular">
+                    {% for currency in supported_currencies %}
+                    <option value="{{ currency }}">{{ currency }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to_currency_regular">To Currency</label>
+                <select class="form-control" id="to_currency_regular" name="to_currency_regular">
+                    {% for currency in supported_currencies %}
+                    <option value="{{ currency }}">{{ currency }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount_regular">Amount</label>
+                <input type="number" class="form-control" id="amount_regular" name="amount_regular" step="0.01"
+                    min="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+        {% if exchange_rate is not none and converted_amount is not none %}
+        <div class="mt-3">
+            <h4>Conversion Result:</h4>
+            {% if exchange_rate is not none %}
+            <p>Exchange Rate: {{ exchange_rate }}</p>
+            {% endif %}
+            {% if converted_amount is not none %}
+            <p>Converted Amount: {{ converted_amount }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
